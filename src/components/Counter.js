@@ -1,55 +1,32 @@
-import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
+// import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import * as actions from '../actions';
+import { inc, dec, rnd } from '../actions';
 
-// в классовом компоненте тоже будет работать
+const Counter = () => {
 
-import { Component } from "react";
+    const counter = useSelector(state => state.counter),
+          dispatch = useDispatch();
 
-class Counter extends Component {
+    return (
 
-    render() {
-
-        const {counter, inc, dec, rnd} = this.props;
-
-        return (
-
-            <div className="jumbotron">
-                <h1>{counter}</h1>
-                <button onClick={inc} className="btn btn-primary">INC</button>
-                <button onClick={dec} className="btn btn-primary">DEC</button>
-                <button onClick={rnd} className="btn btn-primary">RND</button>
-            </div>
-        );
-    }
+        <div className="jumbotron">
+            <h1>{counter}</h1>
+            <button onClick={() => dispatch(inc())} className="btn btn-primary">INC</button>
+            <button onClick={() => dispatch(dec())} className="btn btn-primary">DEC</button>
+            <button onClick={() => dispatch(rnd())} className="btn btn-primary">RND</button>
+        </div>
+    );
 }
 
-// const Counter = ({counter, inc, dec, rnd}) => {
+// const mapStateToProps = (state) => {
 
-//     return (
+//     return {
 
-//         <div className="jumbotron">
-//             <h1>{counter}</h1>
-//             <button onClick={inc} className="btn btn-primary">INC</button>
-//             <button onClick={dec} className="btn btn-primary">DEC</button>
-//             <button onClick={rnd} className="btn btn-primary">RND</button>
-//         </div>
-//     );
+//         counter: state.value
+//     }
 // }
 
-const mapStateToProps = (state) => {
+// export default connect(mapStateToProps, actions)(Counter);
 
-    return {
-
-        counter: state.value
-    }
-} 
-
-// вместо этой функции можем прописать просто actions
-// const mapDispatchToProps = (dispatch) => {
-
-//     return bindActionCreators(actions, dispatch)
-// }
-
-export default connect(mapStateToProps, actions)(Counter);
+export default Counter;
